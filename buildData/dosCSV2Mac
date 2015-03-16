@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ "$#" -ne 2 ]; then
+    echo "Illegal number of parameters"
+    echo "dosCSV2Mac <inFile> <outFile>"
+    exit 1
+fi
+
+if [ ! -f $1 ]; then
+    echo "first arg file doesn't exist"; 
+    exit 1
+fi
+
+if [ -f $2 ]; then
+    echo "protecting you from overwriting existing file $2"
+    exit 1
+fi
+
+tr '\15' '\n' < $1 > $2

@@ -1,0 +1,11 @@
+#!/bin/bash
+IFS=','
+
+while read i a b c d e f g; do
+    [ ! -z "$i" ] && [ ! -z "$a" ] && [ ! -z "$b" ] && [ ! -z "$c" ] && [ ! -z "$d" ] && [ ! -z "$e" ] && [ ! -z "$f" ] && [ ! -z "$g" ] &&  \
+	echo $i $a $b $c $d $e $f $g
+ #   [  -z "$i" ] || [  -z "$a" ] || [  -z "$b" ] || [  -z "$c" ] || [  -z "$d" ] || [  -z "$e" ] || [  -z "$f" ] || [  -z "$g" ] &&  \
+#	echo $i $a $b $c $d $e $f $g
+#echo -e $i $a $b $c $d $e $f $g
+done < $1
+

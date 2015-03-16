@@ -1,0 +1,9 @@
+Problem right now is that we have a test file with 309 female samples, and 1193 male almost 4x more males. 
+
+On output, we're guessing the males great, but getting trashed on the females
+wrong_male 24, wrong_female 201
+
+1 - (24/1193) = 97%
+1 - (201/309) = 35%
+
+Net can minimize MSE by being more right on the males and taking the hit on females. Adapt training to reinforce net only when makes incorrect prediction.

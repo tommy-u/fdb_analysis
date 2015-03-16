@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
   fann_set_activation_function_hidden(ann, FANN_SIGMOID_SYMMETRIC);
   fann_set_activation_function_output(ann, FANN_SIGMOID);
   
-  //  printf("\nTraining now:\n");
+  printf("\nTraining now:\n");
   fann_train_on_data(ann, data, max_epochs, epochs_between_reports, desired_error);
 
   /*  for(j = 0; j < 200; j++){
@@ -71,17 +71,17 @@ int main(int argc, char* argv[]){
   for(i=0; i< fann_length_train_data(data2); i++, inputData+=7, outputData+=2)
     {
       calc_out = fann_run(ann, inputData);
-      /*      printf("act[0]=%f act[1]=%f calc[0]=%f calc[1]=%f diff[0]=%f diff[1]=%f \n",
+      printf("act[0]=%f act[1]=%f calc[0]=%f calc[1]=%f diff[0]=%f diff[1]=%f \n",
 	     outputData[0], outputData[1], calc_out[0], calc_out[1], 
 	     outputData[0]-calc_out[0], outputData[1] - calc_out[1] 
-	     ); */
+	     );
       //Was Female, predicted male
       if( ( (outputData[0] - outputData[1]) > .99 ) && ((calc_out[0] - calc_out[1]) < 0)){
-	//printf("wrong, was female \n");
+	printf("wrong, was female \n");
 	  wrong_female++;
       }
       if( ( (outputData[0] - outputData[1]) < .99 ) && ((calc_out[0] - calc_out[1]) > 0)){
-	//	printf("wrong, was male \n");
+	printf("wrong, was male \n");
 	wrong_male++;
       }
     }

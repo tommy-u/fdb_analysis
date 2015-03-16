@@ -1,0 +1,23 @@
+#!/bin/bash
+max_epochs=50
+samples=20
+#Num Epochs
+echo epoch avg_male_fail avg_fem_fail avg_total_fail
+for i in $(seq 0 $max_epochs); do
+
+    a_tot=0 
+    b_tot=0
+    #Num Samples per Epoch
+    for j in $(seq 0 $samples); do
+	read a b <<<$(./train $i | cut -d ' ' -f 4,6 )
+	a_tot=$(echo $a_tot + $a | bc )
+	b_tot=$(echo $b_tot + $b | bc )
+    done
+    a_avg=$(echo $a_tot / $samples | bc )
+    b_avg=$(echo $b_tot / $samples | bc )
+    total_avg=$(echo $a_avg + $b_avg | bc)
+    echo -e $i'\t'$a_avg'\t'$b_avg'\t'$total_avg
+
+
+done
+wait

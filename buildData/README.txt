@@ -17,5 +17,5 @@ remove first 2 lines
 Put every other in train / test after converting M and F to 0 and 1
 cat tmp5 | tr 'M' '0' | tr 'F' '1' > tmp6
 
-
-
+ cat tmp6 |awk  'NR % 4 == 1 || NR % 4 == 2' > train.data
+ cat tmp6 |awk  'NR % 4 == 3 || NR % 4 == 0' > test.data

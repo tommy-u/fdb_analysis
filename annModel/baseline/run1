@@ -1,0 +1,7 @@
+#!/bin/bash
+echo starting
+max=5
+for i in $(seq 0 $max); do
+    echo $i
+done
+echo done

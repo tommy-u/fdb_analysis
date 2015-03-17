@@ -1,0 +1,6 @@
+#!/bin/bash
+echo starting
+for i in $(seq 0 $max_epochs); do
+    echo $i
+done
+echo done

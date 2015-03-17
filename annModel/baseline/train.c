@@ -1,6 +1,7 @@
 #include "fann.h"
 //Tommy Unger (tommyu@bu.edu)
 #include <stdlib.h> //for exit
+#define MSE
 int main(int argc, char* argv[]){
   const unsigned int num_input = 7;
   const unsigned int num_output = 2;
@@ -63,6 +64,13 @@ int main(int argc, char* argv[]){
 
   printf("wrong_male %d, wrong_female %d\n", wrong_male, wrong_female);
 */
+#ifdef MSE
+  struct fann_train_data *data2 = fann_read_train_from_file("test.data");
+  float MSETrain = fann_test_data(ann,data);
+  float MSETest =  fann_test_data(ann,data2);
+    
+  printf("MSETrain: %f MSETest %f \n",MSETrain, MSETest); 
+#else
   struct fann_train_data *data2 = fann_read_train_from_file("test.data");
   inputData = *data2->input; outputData = *data2->output;  
   fann_scale_input_train_data(data2, -1, 1);
@@ -87,8 +95,10 @@ int main(int argc, char* argv[]){
     }
  
   printf("epochs %d wrong_male %d wrong_female %d wrong_total %d\n",max_epochs,  wrong_male , wrong_female , wrong_male + wrong_female);
-  fann_destroy(ann);
+#endif
 
+  fann_destroy(ann);
+  fann_destroy_train(data2);
   fann_destroy_train(data);
   return 0;
 }

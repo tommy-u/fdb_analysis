@@ -1,0 +1,30 @@
+#!/bin/bash
+max_epochs=500
+samples=15
+cores=50
+#Num Epochs
+echo MSETrain MSETest
+#for i in $(seq 0 $max_epochs); do
+i=0
+while [ $i -lt $max_epochs ]; do
+    for j in $(seq 1 $cores); do
+	i=$[$i+1]
+	(
+	    a_tot=0 
+	    b_tot=0
+	    #Num Samples per Epoch
+	    k=0
+	    for k in $(seq 1 $samples); do
+		read a b <<<$(nice ./train $i | cut -d ' ' -f 2,4 )
+		a_tot=$(echo $a_tot + $a | bc )
+		b_tot=$(echo $b_tot + $b | bc )
+	    done
+	    a_avg=$(echo $a_tot / $samples | bc )
+	    b_avg=$(echo $b_tot / $samples | bc )
+#	    total_avg=$(echo $a_avg + $b_avg | bc)
+	    echo -e $i'\t'$a_avg'\t'$b_avg
+	)&
+	done
+    wait
+done
+

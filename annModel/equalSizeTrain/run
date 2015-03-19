@@ -1,14 +1,14 @@
 #!/bin/bash
-max_epochs=20
-samples=20
-#cores=10
+max_epochs=100
+samples=10
+
 #Num Epochs
 echo Each row is averaged over $samples samples. 
 echo Epoch male_err fem_err total_err MSETrain MSETest
 #for i in $(seq 0 $max_epochs); do
 i=0
 while [ $i -lt $max_epochs ]; do
-#    for j in $(seq 1 $cores); do	
+    #    for j in $(seq 1 $cores); do	
     i=$[$i+1]	
     (
 	a_tot=0 
@@ -16,25 +16,24 @@ while [ $i -lt $max_epochs ]; do
 	c_tot=0
 	d_tot=0
 	e_tot=0
-	    #Num Samples per Epoch
+	#Num Samples per Epoch
 	k=0
 	for k in $(seq 1 $samples); do
 	    read a b c d e <<<$( nice ./train $i | cut -f 2-6 )
 	    a_tot=$(echo $a_tot + $a | bc )
-		b_tot=$(echo $b_tot + $b | bc )
-		c_tot=$(echo $c_tot + $c | bc )
-		d_tot=$(echo $d_tot + $d | bc )
-		e_tot=$(echo $e_tot + $e | bc )
-		#echo -e $i'\t'$a'\t'$b'\t'$c'\t'$d'\t'$e
+	    b_tot=$(echo $b_tot + $b | bc )
+	    c_tot=$(echo $c_tot + $c | bc )
+	    d_tot=$(echo $d_tot + $d | bc )
+	    e_tot=$(echo $e_tot + $e | bc )
 	done
-	    #a_avg=$(echo $a_tot / $samples | bc )
 	a_avg=$(bc <<< "scale = 3; $a_tot / $samples")
 	b_avg=$(bc <<< "scale = 3; $b_tot / $samples")
 	c_avg=$(bc <<< "scale = 3; $c_tot / $samples")
 	d_avg=$(bc <<< "scale = 3; $d_tot / $samples")
 	e_avg=$(bc <<< "scale = 3; $e_tot / $samples")
 	echo -e $i'\t'$a_avg'\t'$b_avg'\t'$c_avg'\t'$d_avg'\t'$e_avg
-	)&
-#	done
-wait
+    )&
+    if (( $i % 10 == 0 )); then wait; fi    
 done
+wait
+    

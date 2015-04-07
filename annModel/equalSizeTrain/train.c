@@ -6,9 +6,9 @@ int main(int argc, char* argv[]){
   const unsigned int num_input = 7;
   const unsigned int num_output = 1;
   const unsigned int num_layers = 3;
-  const unsigned int num_hidden = 2;
+  //const unsigned int num_hidden = 1;
   struct fann_train_data *data = fann_read_train_from_file("fannTrain.data");
-  struct fann *ann = fann_create_standard(num_layers, num_input, num_hidden, num_output);
+  struct fann *ann = fann_create_standard(num_layers, num_input, num_output);
   int max_epochs, epochs_between_reports = 0;
   fann_type desired_error = 0.01;
 
